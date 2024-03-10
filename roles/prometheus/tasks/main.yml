@@ -1,0 +1,22 @@
+---
+# tasks file for roles/prometheus
+- name: Add Prometheus configuration template
+  template:
+    src: templates/prometheus.yml.j2
+    dest: /tmp/prometheus.yml
+
+- name: Create Prometheus container
+  docker_container:
+    name: prometheus
+    image: prom/prometheus:latest
+    networks:
+      - name: "{{ network }}"
+    recreate: yes
+    ports:
+      - 9090:9090
+    restart: yes
+    volumes:
+      - /tmp/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart_policy: always
+    purge_networks: yes
+    networks_cli_compatible: yes

@@ -1,0 +1,4 @@
+---
+# vars file for roles/prometheus
+node-exporter-port: 9100
+

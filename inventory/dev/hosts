@@ -1,0 +1,5 @@
+[AWS]
+51.20.65.52 ansible_user=ubuntu
+
+[AWS:vars]
+network=monitoring

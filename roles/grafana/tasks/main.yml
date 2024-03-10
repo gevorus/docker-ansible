@@ -1,0 +1,23 @@
+---
+# tasks file for roles/grafana
+- name: Add Grafana configuration template
+  template:
+    src: templates/prometheus.yaml.j2
+    dest: /tmp/prometheus.yml
+
+- name: Create Grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana:latest
+    networks:
+      - name: "{{ network }}"
+    recreate: yes
+    ports:
+      - 3000:3000
+    volumes:
+      - files/node-exporter-full.json:/var/lib/grafana/dashboards/node-exporter-full.json
+      - files/node-exporter-full.yaml:/etc/grafana/provisioning/dashboards/node-exporter-full.yaml
+    restart: yes
+    restart_policy: always
+    purge_networks: yes
+    networks_cli_compatible: yes

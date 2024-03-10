@@ -1,0 +1,5 @@
+---
+# tasks file for roles/commons
+- name: Create docker network
+  docker_network:
+    name: "{{ network }}"
